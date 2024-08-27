@@ -6,11 +6,13 @@ from datetime import datetime
 # File where tasks are stored
 TASKS_FILE = "tasks.json"
 
+
 # Initialize the tasks list if it doesn't exist
 def initialize_tasks_file():
     if not os.path.exists(TASKS_FILE) or os.path.getsize(TASKS_FILE) == 0:
         with open(TASKS_FILE, "w") as f:
             json.dump([], f)
+
 
 # Load tasks from the JSON file
 def load_tasks():
@@ -25,6 +27,7 @@ def load_tasks():
 def save_tasks(tasks):
     with open(TASKS_FILE, "w") as f:
         json.dump(tasks, f, indent=4)
+
 
 # Generate a unique ID for a new task
 def generate_task_id(tasks):
@@ -49,6 +52,7 @@ def add_task(description):
     save_tasks(tasks)
     print(f"Task added successfully (ID: {task_id})")
 
+
 # Update an existing task
 def update_task(task_id, new_description):
     tasks = load_tasks()
@@ -61,8 +65,8 @@ def update_task(task_id, new_description):
             print(f"Task {task_id} updated successfully.")
             return
 
-
     print(f"Task {task_id} not found.")
+
 
 # Delete a task
 def delete_task(task_id):
@@ -75,6 +79,7 @@ def delete_task(task_id):
             return
     print(f"Task {task_id} not found.")
 
+
 def update_task_status(task_id, new_status):
     tasks = load_tasks()
     for task in tasks:
@@ -86,13 +91,16 @@ def update_task_status(task_id, new_status):
             return
     print(f"Task ID {task_id} not found")
 
+
 # Mark a task as in-progress
 def mark_in_progress(task_id):
     update_task_status(task_id, "in-progress")
 
+
 # Mark a task as in-progress
 def mark_done(task_id):
     update_task_status(task_id, "done")
+
 
 # List tasks with options to filter by status
 def list_tasks(filter_status=None):
@@ -102,7 +110,9 @@ def list_tasks(filter_status=None):
     if not tasks:
         print("No tasks found.")
     for task in tasks:
-        print(f"ID: {task['id']}, Description: {task['description']}, Status: {task['status']}, Created At: {task['createdAt']}, Updated At: {task['updatedAt']}")
+        print(
+            f"ID: {task['id']}, Description: {task['description']}, Status: {task['status']}, Created At: {task['createdAt']}, Updated At: {task['updatedAt']}")
+
 
 # Main function to parse commands
 def main():
@@ -132,6 +142,7 @@ def main():
     else:
         print("Invalid command or missing arguments.")
         print("Available commands: add, update, delete, mark-in-progress, mark-done, list")
+
 
 if __name__ == "__main__":
     main()
