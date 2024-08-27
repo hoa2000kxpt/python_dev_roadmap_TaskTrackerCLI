@@ -7,7 +7,7 @@ from datetime import datetime
 TASKS_FILE = "tasks.json"
 
 
-# Initialize the tasks list if it doesn't exist
+# Initialize the tasks list if the task doesn't exist, or it is empty
 def initialize_tasks_file():
     if not os.path.exists(TASKS_FILE) or os.path.getsize(TASKS_FILE) == 0:
         with open(TASKS_FILE, "w") as f:
