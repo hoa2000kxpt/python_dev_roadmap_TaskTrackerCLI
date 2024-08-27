@@ -16,7 +16,7 @@ def initialize_tasks_file():
 def load_tasks():
     with open(TASKS_FILE, "r") as f:
         try:
-            return [json.load(f)]
+            return json.load(f)
         except json.JSONDecodeError:
             return []
 
@@ -52,13 +52,16 @@ def add_task(description):
 # Update an existing task
 def update_task(task_id, new_description):
     tasks = load_tasks()
+    # print(tasks)
     for task in tasks:
-        if task["id"] == task_id:
+        if int(task["id"]) == int(task_id):
             task["description"] = new_description
             task["updatedAt"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
             save_tasks(tasks)
             print(f"Task {task_id} updated successfully.")
             return
+
+
     print(f"Task {task_id} not found.")
 
 # Delete a task
@@ -113,6 +116,7 @@ def main():
     if command == "add" and len(sys.argv) == 3:
         add_task(sys.argv[2])
     elif command == "update" and len(sys.argv) == 4:
+        # print(type(int(sys.argv[2])))
         update_task(int(sys.argv[2]), sys.argv[3])
     elif command == "delete" and len(sys.argv) == 3:
         delete_task(int(sys.argv[2]))
